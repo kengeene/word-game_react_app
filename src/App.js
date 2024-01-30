@@ -6,16 +6,13 @@ import { useEffect, useState } from "react";
 import { flattenArray, randomizeArray, unflattenArray } from "./utils/array";
 
 function App() {
-  const [options] = useState({
+  // Logic to render table
+  const [options, setOptions] = useState({
     groupOne: ["one", "two", "three"],
     groupTwo: ["four", "five", "six"],
     groupThree: ["seven", "eight", "nine"],
     groupFour: ["ten", "eleven", "tweleve"],
   });
-
-  const clickedButton = (e) => {
-    console.log("e", e.target.id);
-  };
 
   const [allOptions, setAllOptions] = useState([]);
 
@@ -38,6 +35,47 @@ function App() {
     setRandomizedSubArrays(subArray);
   }, [randomizedOptions]);
 
+  // Logic to compute winner
+
+  const [selectedWords, setSelectedWords] = useState([]);
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    const word = e.target.id;
+    if (!selectedWords.includes(word)) {
+      setSelectedWords([...selectedWords, word]);
+    } else {
+      setSelectedWords([...selectedWords.filter((x) => x !== word)]);
+    }
+  };
+
+  const [resolvedWords, setResolvedWords] = useState([]);
+
+  useEffect(() => {
+    const checkWordCominationMatch = (selectedWords) => {
+      let combinationMatchIndex = null;
+
+      for (const index in options) {
+        if (options[index].every((word) => selectedWords.includes(word))) {
+          combinationMatchIndex = index;
+          setResolvedWords((r) => [...r, ...selectedWords]);
+          setSelectedWords([]);
+          alert(`index ${index} has matching words`);
+        }
+      }
+
+      if (!combinationMatchIndex) {
+        setSelectedWords([]);
+        alert("The selected words have nothing in common, Try Again");
+      }
+      return combinationMatchIndex;
+    };
+
+    if (selectedWords.length === 3) {
+      checkWordCominationMatch(selectedWords);
+    }
+  }, [options, selectedWords]);
+
   return (
     <Box
       sx={{
@@ -56,7 +94,13 @@ function App() {
           key={"group" + index}
         >
           {array.map((word, index) => (
-            <Button id={index} key={index} onClick={clickedButton}>
+            <Button
+              id={word}
+              className={selectedWords.includes(word) ? "selected" : ""}
+              disabled={resolvedWords.includes(word)}
+              key={index}
+              onClick={handleClick}
+            >
               {word}
             </Button>
           ))}
