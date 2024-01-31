@@ -4,10 +4,11 @@ import Box from "@mui/material/Box";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { useEffect, useState } from "react";
 import { flattenArray, randomizeArray, unflattenArray } from "./utils/array";
+import SolvedWords from "./components/solvedWords/index";
 
 function App() {
   // Logic to render table
-  const [options, setOptions] = useState({
+  const [options] = useState({
     groupOne: ["one", "two", "three"],
     groupTwo: ["four", "five", "six"],
     groupThree: ["seven", "eight", "nine"],
@@ -58,9 +59,9 @@ function App() {
       for (const index in options) {
         if (options[index].every((word) => selectedWords.includes(word))) {
           combinationMatchIndex = index;
-          setResolvedWords((r) => [...r, ...selectedWords]);
+          setResolvedWords((r) => ({ ...r, [index]: options[index] }));
           setSelectedWords([]);
-          alert(`index ${index} has matching words`);
+          alert(`Group ${index} has matching words`);
         }
       }
 
@@ -77,36 +78,41 @@ function App() {
   }, [options, selectedWords]);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        "& > *": {
-          m: 1,
-        },
-      }}
-    >
-      {randomizedSubArrays.map((array, index) => (
-        <ButtonGroup
-          size="large"
-          aria-label="large button group"
-          key={"group" + index}
-        >
-          {array.map((word, index) => (
-            <Button
-              id={word}
-              className={selectedWords.includes(word) ? "selected" : ""}
-              disabled={resolvedWords.includes(word)}
-              key={index}
-              onClick={handleClick}
-            >
-              {word}
-            </Button>
-          ))}
-        </ButtonGroup>
-      ))}
-    </Box>
+    <>
+      <SolvedWords resolvedWords={resolvedWords} options={options} />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          "& > *": {
+            m: 1,
+          },
+        }}
+      >
+        {randomizedSubArrays.map((array, index) => (
+          <ButtonGroup
+            size="large"
+            orientation="vertical"
+            aria-label="large button group"
+            key={"group" + index}
+          >
+            {array.map((word, index) => (
+              <Button
+                id={word}
+                className={selectedWords.includes(word) ? "selected" : ""}
+                disabled={flattenArray(resolvedWords).includes(word)}
+                key={index}
+                onClick={handleClick}
+              >
+                {word}
+              </Button>
+            ))}
+          </ButtonGroup>
+        ))}
+      </Box>
+    </>
   );
 }
 
