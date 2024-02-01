@@ -76,13 +76,7 @@ function App() {
 
   return (
     <Container>
-      <Grid
-        container
-        direction="column"
-        justifyContent="center"
-        // alignItems="center"
-        spacing={2}
-      >
+      <Grid container direction="column" justifyContent="center" spacing={2}>
         <Grid item xs={12}>
           <SolvedWords resolvedWords={resolvedWords} options={options} />
         </Grid>
