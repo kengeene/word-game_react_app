@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 import { flattenArray, randomizeArray, unflattenArray } from "./utils/array";
 import SolvedWords from "./components/solvedWords/index";
-import { Grid, Container, ButtonGroup, Box, Button } from "@mui/material";
+import {
+  Grid,
+  Container,
+  ButtonGroup,
+  Box,
+  Button,
+  Typography,
+} from "@mui/material";
+import logo from "./assets/images/logo_transparent.png";
 
 function App() {
   // Logic to render table
@@ -78,8 +86,19 @@ function App() {
     <Container>
       <Grid container direction="column" justifyContent="center" spacing={2}>
         <Grid item xs={12}>
-          <SolvedWords resolvedWords={resolvedWords} options={options} />
+          <Box>
+            <img src={logo} alt="word_game_logo" height="100px" />
+            <Typography
+              variant="h6"
+              component="div"
+              color="#000000"
+              sx={{ mb: 1.5 }}
+            >
+              Find all related words in sets of 3's
+            </Typography>
+          </Box>
         </Grid>
+        {/* Game button display */}
         <Grid item xs={12}>
           <Box>
             {randomizedSubArrays.map((array, index) => (
@@ -103,6 +122,10 @@ function App() {
               </ButtonGroup>
             ))}
           </Box>
+        </Grid>
+        {/* Display for completed words */}
+        <Grid item xs={12}>
+          <SolvedWords resolvedWords={resolvedWords} options={options} />
         </Grid>
       </Grid>
     </Container>
