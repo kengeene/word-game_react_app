@@ -93,8 +93,9 @@ function App() {
               component="div"
               color="#000000"
               sx={{ mb: 1.5 }}
+              data-testid={"heading"}
             >
-              Find all related words in sets of 3's
+              Find all related words in sets of threes
             </Typography>
           </Box>
         </Grid>
@@ -115,6 +116,7 @@ function App() {
                     disabled={flattenArray(resolvedWords).includes(word)}
                     key={index}
                     onClick={handleClick}
+                    data-testid={"button" + word}
                   >
                     {word}
                   </Button>
