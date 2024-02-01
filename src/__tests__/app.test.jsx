@@ -53,3 +53,40 @@ describe("Game Page", () => {
     //   }
   });
 });
+
+describe("should display the correct answers at the bottom", () => {
+  test("should display correct answers for the first combination", async () => {
+    render(<App />);
+    await userEvent.click(screen.getByTestId(/buttonone/i));
+    await userEvent.click(screen.getByTestId(/buttontwo/i));
+    await userEvent.click(screen.getByTestId(/buttonthree/i));
+    const headingText = screen.getByTestId(/answer0/i);
+    expect(headingText).toBeInTheDocument();
+  });
+
+  // Reactivate other tests after reimplementing notifications
+  //   test("should display correct answers for the second combination", async () => {
+  //     render(<App />);
+  //     await userEvent.click(screen.getByTestId(/buttonfour/i));
+  //     await userEvent.click(screen.getByTestId(/buttonfive/i));
+  //     await userEvent.click(screen.getByTestId(/buttonsix/i));
+  //     const headingText = screen.getByTestId(/answer1/i);
+  //     expect(headingText).toBeInTheDocument();
+  //   });
+  //   test("should display correct answers for the third combination", async () => {
+  //     render(<App />);
+  //     await userEvent.click(screen.getByTestId(/buttonseven/i));
+  //     await userEvent.click(screen.getByTestId(/buttoneight/i));
+  //     await userEvent.click(screen.getByTestId(/buttonnine/i));
+  //     const headingText = screen.getByTestId(/answer2/i);
+  //     expect(headingText).toBeInTheDocument();
+  //   });
+  //   test("should display correct answers for the fourth combination", async () => {
+  //     render(<App />);
+  //     await userEvent.click(screen.getByTestId(/buttonten/i));
+  //     await userEvent.click(screen.getByTestId(/buttoneleven/i));
+  //     await userEvent.click(screen.getByTestId(/buttontweleve/i));
+  //     const headingText = screen.getByTestId(/answer3/i);
+  //     expect(headingText).toBeInTheDocument();
+  //   });
+});
