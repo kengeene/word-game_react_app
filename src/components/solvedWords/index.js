@@ -7,13 +7,23 @@ import Typography from "@mui/material/Typography";
 // import Snackbar from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
+import { styled } from "@mui/material/styles";
+import Paper from "@mui/material/Paper";
 
 export default function OutlinedCard({ resolvedWords }) {
+  const Item = styled(Paper)(({ theme }) => ({
+    flexGrow: 1,
+    borderRadius: "10rem",
+  }));
   return (
     <Box>
       <Stack spacing={2}>
         {Object.entries(resolvedWords).map(([name, array], index) => (
-          <item className={`row-${index} answer-card`}>
+          <Item
+            className={`row-${index} answer-card`}
+            data-testid={"answer" + index}
+            key={index}
+          >
             <Typography
               variant="h5"
               component="div"
@@ -28,7 +38,7 @@ export default function OutlinedCard({ resolvedWords }) {
             >
               {array.toString()}
             </Typography>
-          </item>
+          </Item>
         ))}
       </Stack>
     </Box>

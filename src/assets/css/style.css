@@ -16,31 +16,31 @@ body {
 }
 
 .row-0 {
-  background-color: #6a2c70;
+  background-color: #6a2c70 !important;
   transform: translateY(10%);
   transition: linear ease-in 5s;
 }
 
 .row-1 {
-  background-color: #f9ed69;
+  background-color: #f9ed69 !important;
   color: #1d1b1a !important;
   transform: translateY(10%);
   transition: linear ease-in 5s;
 }
 
 .row-2 {
-  background-color: #f08a5d;
+  background-color: #f08a5d !important;
   transform: translateY(10%);
   transition: linear ease-in 5s;
 }
 
 .row-3 {
-  background-color: #b83b5e;
+  background-color: #b83b5e !important;
   transform: translateY(10%);
   transition: linear ease-in 5s;
 }
 
 .answer-card {
   text-align: center;
-  border-radius: 10rem;
+  /* border-radius: 10rem; */
 }
