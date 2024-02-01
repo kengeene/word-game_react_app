@@ -3,6 +3,10 @@ import App from "../App.js";
 import userEvent from "@testing-library/user-event";
 
 describe("Game Page", () => {
+  beforeEach(() => {
+    window.alert = jest.fn();
+  });
+
   test("Example 1 renders successfully", async () => {
     render(<App />);
     const headingText = screen.getByTestId(/heading/i);
