@@ -10,14 +10,33 @@ import {
   Typography,
 } from "@mui/material";
 import logo from "./assets/images/logo_transparent.png";
+import {
+  store,
+  setOptions,
+  addSelectedWords,
+  removeSelectedWord,
+  clearSelectedWords,
+  addResolvedWords,
+} from "./store/index";
 
 function App() {
+  useEffect(() => {
+    store.dispatch(setOptions());
+  }, []);
+
   // Logic to render table
   const [options] = useState({
     groupOne: ["one", "two", "three"],
     groupTwo: ["four", "five", "six"],
     groupThree: ["seven", "eight", "nine"],
     groupFour: ["ten", "eleven", "tweleve"],
+  });
+
+  const [selectedWords, setSelectedWords] = useState([]);
+  store.subscribe(() => {
+    const { selectedWords, resolvedWords } = store.getState();
+    setSelectedWords(selectedWords);
+    setResolvedWords(resolvedWords);
   });
 
   const [allOptions, setAllOptions] = useState([]);
@@ -43,15 +62,13 @@ function App() {
 
   // Logic to compute winner
 
-  const [selectedWords, setSelectedWords] = useState([]);
-
   const handleClick = (e) => {
     e.preventDefault();
     const word = e.target.id;
     if (!selectedWords.includes(word)) {
-      setSelectedWords([...selectedWords, word]);
+      store.dispatch(addSelectedWords(word));
     } else {
-      setSelectedWords([...selectedWords.filter((x) => x !== word)]);
+      store.dispatch(removeSelectedWord(word));
     }
   };
 
@@ -64,14 +81,14 @@ function App() {
       for (const index in options) {
         if (options[index].every((word) => selectedWords.includes(word))) {
           combinationMatchIndex = index;
-          setResolvedWords((r) => ({ ...r, [index]: options[index] }));
-          setSelectedWords([]);
+          store.dispatch(addResolvedWords({ [index]: options[index] }));
+          store.dispatch(clearSelectedWords());
           alert(`Group ${index} has matching words`);
         }
       }
 
       if (!combinationMatchIndex) {
-        setSelectedWords([]);
+        store.dispatch(clearSelectedWords());
         alert("The selected words have nothing in common, Try Again");
       }
       return combinationMatchIndex;
