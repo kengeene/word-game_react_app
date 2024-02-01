@@ -1,19 +1,46 @@
+* {
+  margin: 0;
+}
+
+body {
+  padding: 100px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
 .selected {
   background-color: darkgray !important;
 }
 
 .row-0 {
   background-color: #6a2c70;
+  transform: translateY(10%);
+  transition: linear ease-in 5s;
 }
 
 .row-1 {
   background-color: #f9ed69;
+  color: #1d1b1a !important;
+  transform: translateY(10%);
+  transition: linear ease-in 5s;
 }
 
 .row-2 {
   background-color: #f08a5d;
+  transform: translateY(10%);
+  transition: linear ease-in 5s;
 }
 
 .row-3 {
   background-color: #b83b5e;
+  transform: translateY(10%);
+  transition: linear ease-in 5s;
+}
+
+.answer-card {
+  text-align: center;
+  border-radius: 10rem;
 }

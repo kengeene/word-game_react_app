@@ -1,10 +1,7 @@
-import "./assets/css/App.css";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import { useEffect, useState } from "react";
 import { flattenArray, randomizeArray, unflattenArray } from "./utils/array";
 import SolvedWords from "./components/solvedWords/index";
+import { Grid, Container, ButtonGroup, Box, Button } from "@mui/material";
 
 function App() {
   // Logic to render table
@@ -78,41 +75,43 @@ function App() {
   }, [options, selectedWords]);
 
   return (
-    <>
-      <SolvedWords resolvedWords={resolvedWords} options={options} />
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          "& > *": {
-            m: 1,
-          },
-        }}
+    <Container>
+      <Grid
+        container
+        direction="column"
+        justifyContent="center"
+        // alignItems="center"
+        spacing={2}
       >
-        {randomizedSubArrays.map((array, index) => (
-          <ButtonGroup
-            size="large"
-            orientation="vertical"
-            aria-label="large button group"
-            key={"group" + index}
-          >
-            {array.map((word, index) => (
-              <Button
-                id={word}
-                className={selectedWords.includes(word) ? "selected" : ""}
-                disabled={flattenArray(resolvedWords).includes(word)}
-                key={index}
-                onClick={handleClick}
+        <Grid item xs={12}>
+          <SolvedWords resolvedWords={resolvedWords} options={options} />
+        </Grid>
+        <Grid item xs={12}>
+          <Box>
+            {randomizedSubArrays.map((array, index) => (
+              <ButtonGroup
+                size="large"
+                orientation="vertical"
+                aria-label="large button group"
+                key={"group" + index}
               >
-                {word}
-              </Button>
+                {array.map((word, index) => (
+                  <Button
+                    id={word}
+                    className={selectedWords.includes(word) ? "selected" : ""}
+                    disabled={flattenArray(resolvedWords).includes(word)}
+                    key={index}
+                    onClick={handleClick}
+                  >
+                    {word}
+                  </Button>
+                ))}
+              </ButtonGroup>
             ))}
-          </ButtonGroup>
-        ))}
-      </Box>
-    </>
+          </Box>
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
 
